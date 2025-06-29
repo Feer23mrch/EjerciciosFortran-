@@ -1,0 +1,6 @@
+PROGRAM Condicion
+    a = 10; 
+    IF a > 5 THEN
+        WRITE('a es mayor que 5')
+    ENDIF
+END PROGRAM Condicion

@@ -1,0 +1,49 @@
+PROGRAM Operaciones
+
+INTEGER :: X, Y, Resultado
+
+FUNCTION Multiplicar(a, b)
+    RETURN a * b
+ENDFUNCTION
+
+FUNCTION Mayor(a, b)
+    IF a == b THEN
+        RETURN a
+    ELSE
+        RETURN b
+    ENDIF
+ENDFUNCTION
+
+FUNCTION MostrarResultado()
+    X = 4;
+    Y = 7;
+    Resultado = Multiplicar(X, Y);
+    WRITE('El producto es:')
+    WRITE(Resultado);
+
+    Resultado = Mayor(X, Y);
+    WRITE('El mayor es:')
+    WRITE(Resultado);
+ENDFUNCTION
+
+CALL MostrarResultado;
+FUNCTION Factorial(n)
+    IF n == 0 THEN
+        RETURN 1
+    ELSE
+        RETURN n * Factorial(n - 1)
+    ENDIF
+ENDFUNCTION
+
+IF X == Y THEN
+        IF X == 0 THEN
+            WRITE('X es menor que Y y mayor que 0')
+        ELSE
+            WRITE('X es menor que Y pero no es mayor que 0')
+        ENDIF
+    ENDIF
+
+
+
+
+END PROGRAM Operaciones

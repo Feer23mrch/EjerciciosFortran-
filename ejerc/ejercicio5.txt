@@ -1,0 +1,21 @@
+PROGRAM Programa
+! ANIDACIONES CON DO = 9,23
+
+DO I = 1, 3
+    WRITE('Nivel I:', I)
+    DO J = 1, 2
+        WRITE('  Nivel J:', J)
+        DO K = 1, 4
+            WRITE('    Nivel K:', K)
+            DO L > 0
+                WRITE('      Nivel L (condicional):', L)
+                DO
+                    WRITE('        Nivel infinito')
+                ENDDO
+            ENDDO
+        ENDDO
+    ENDDO
+ENDDO
+
+
+END PROGRAM Programa

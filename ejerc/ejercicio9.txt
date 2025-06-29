@@ -1,0 +1,44 @@
+PROGRAM declaraciones
+
+! Declaraciones de variables
+INTEGER :: X, Y, Z, Resultado, Contador, Tope, A, B, C, D, E
+REAL :: Pi, Radio, Area, Altura, Volumen, Base, Largo, Ancho, Temp
+
+! Declaración de funciones
+FUNCTION Multiplicar(a, b)
+ENDFUNCTION
+
+FUNCTION Mayor(a, b)
+ENDFUNCTION
+
+FUNCTION MostrarResultado()
+ENDFUNCTION
+
+FUNCTION Factorial(n)
+ENDFUNCTION
+
+FUNCTION Sumar(x, y)
+ENDFUNCTION
+
+FUNCTION Restar(x, y)
+ENDFUNCTION
+
+FUNCTION Dividir(x, y)
+ENDFUNCTION
+
+FUNCTION CalcularAreaCirculo(r)
+ENDFUNCTION
+
+FUNCTION EsPar(n)
+ENDFUNCTION
+
+FUNCTION CalcularVolumenCilindro(r, h)
+ENDFUNCTION
+
+FUNCTION Promedio(a, b, c)
+ENDFUNCTION
+
+FUNCTION Potencia(base, exponente)
+ENDFUNCTION
+
+END PROGRAM declaraciones

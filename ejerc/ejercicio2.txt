@@ -1,0 +1,5 @@
+PROGRAM Suma
+    x = 5; 
+    y = 7; 
+    WRITE('Suma:', x + y)
+END PROGRAM Suma

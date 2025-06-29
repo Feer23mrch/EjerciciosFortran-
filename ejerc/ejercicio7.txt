@@ -1,0 +1,49 @@
+
+
+PROGRAM main
+
+! ANIDACIONES CON FUNCIONES CON PARAMETRO 
+
+FUNCTION factorial(n)
+    IF n == 0 THEN
+        RETURN 1
+    ELSE
+        RETURN n * factorial(n - 1)
+    ENDIF
+ENDFUNCTION
+
+FUNCTION suma_a_b(a, b)
+    IF b == 0 THEN
+        RETURN a
+    ELSE
+        RETURN suma_a_b(a + 1, b - 1)
+    ENDIF
+ENDFUNCTION
+
+FUNCTION potencia(base, exponente)
+    IF exponente == 0 THEN
+        RETURN 1
+    ELSE
+        RETURN base * potencia(base, exponente - 1)
+    ENDIF
+ENDFUNCTION
+
+FUNCTION maximo(a, b)
+    IF a > b THEN
+        RETURN a
+    ELSE
+        RETURN b
+    ENDIF
+ENDFUNCTION
+
+FUNCTION main_func()
+    WRITE('Factorial de 6 es: ', factorial(6))
+    WRITE('Suma de 7 + 8 es: ', suma_a_b(7, 8))
+    WRITE('3 elevado a la 4 es: ', potencia(3, 4))
+    WRITE('El maximo entre 15 y 20 es: ', maximo(15, 20))
+    WRITE('Factorial de 5 + potencia de 2^3 es: ', factorial(5) + potencia(2, 3))
+    WRITE('Maximo entre suma_a_b(5,5) y factorial(3): ', maximo(suma_a_b(5,5), factorial(3)))
+ENDFUNCTION
+
+CALL main_func();
+END PROGRAM main

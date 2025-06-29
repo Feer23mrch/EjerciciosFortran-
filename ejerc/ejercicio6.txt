@@ -1,0 +1,22 @@
+
+
+PROGRAM funciones
+
+! ANIDACIONES PARA FUNCIONES
+
+FUNCTION saludar()
+    WRITE('!Hola desde saludar!')
+ENDFUNCTION
+
+FUNCTION despedir()
+    WRITE('Adios desde despedir!')
+ENDFUNCTION
+
+FUNCTION principal()
+    CALL saludar;
+    CALL despedir;
+ENDFUNCTION
+
+CALL principal;
+
+END PROGRAM funciones

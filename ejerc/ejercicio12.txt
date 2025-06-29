@@ -1,0 +1,173 @@
+PROGRAM Prueba
+
+! ANIDACIONES DE IF 
+
+IF A == 1 THEN
+    IF B == 2 THEN
+        IF C == 3 THEN
+            IF D == 4 THEN
+                IF E == 5 THEN
+                    WRITE('E es 5')
+                ELSE
+                    WRITE('E no es 5')
+                ENDIF
+            ELSE
+                WRITE('D no es 4')
+            ENDIF
+        ELSE
+            WRITE('C no es 3')
+        ENDIF
+    ELSE
+        WRITE('B no es 2')
+    ENDIF
+ELSE
+    WRITE('A no es 1')
+ENDIF
+
+
+
+! ANIDACIONES DE DO
+
+DO
+    WRITE('Primer nivel DO')
+    DO
+        WRITE('Segundo nivel DO')
+        DO
+            WRITE('Tercer nivel DO')
+            DO
+                WRITE('Cuarto nivel DO')
+            ENDDO
+        ENDDO
+    ENDDO
+ENDDO
+
+
+! ANIDACIONES CON DO = 9,23
+
+DO I = 1, 3
+    WRITE('Nivel I:', I)
+    DO J = 1, 2
+        WRITE('  Nivel J:', J)
+        DO K = 1, 4
+            WRITE('    Nivel K:', K)
+            DO L > 0
+                WRITE('      Nivel L (condicional):', L)
+                DO
+                    WRITE('        Nivel infinito')
+                ENDDO
+            ENDDO
+        ENDDO
+    ENDDO
+ENDDO
+
+
+
+! ANIDACIONES PARA FUNCIONES
+
+FUNCTION saludar()
+    WRITE('!Hola desde saludar!')
+ENDFUNCTION
+
+FUNCTION despedir()
+    WRITE('Adios desde despedir!')
+ENDFUNCTION
+
+FUNCTION principal()
+    CALL saludar;
+    CALL despedir;
+ENDFUNCTION
+
+CALL principal;
+
+
+! ANIDACIONES CON FUNCIONES CON PARAMETRO 
+
+FUNCTION factorial(n)
+    IF n == 0 THEN
+        RETURN 1
+    ELSE
+        RETURN n * factorial(n - 1)
+    ENDIF
+ENDFUNCTION
+
+FUNCTION suma_a_b(a, b)
+    IF b == 0 THEN
+        RETURN a
+    ELSE
+        RETURN suma_a_b(a + 1, b - 1)
+    ENDIF
+ENDFUNCTION
+
+FUNCTION potencia(base, exponente)
+    IF exponente == 0 THEN
+        RETURN 1
+    ELSE
+        RETURN base * potencia(base, exponente - 1)
+    ENDIF
+ENDFUNCTION
+
+FUNCTION maximo(a, b)
+    IF a > b THEN
+        RETURN a
+    ELSE
+        RETURN b
+    ENDIF
+ENDFUNCTION
+
+FUNCTION main_func()
+    WRITE('Factorial de 6 es: ', factorial(6))
+    WRITE('Suma de 7 + 8 es: ', suma_a_b(7, 8))
+    WRITE('3 elevado a la 4 es: ', potencia(3, 4))
+    WRITE('El maximo entre 15 y 20 es: ', maximo(15, 20))
+    WRITE('Factorial de 5 + potencia de 2^3 es: ', factorial(5) + potencia(2, 3))
+    WRITE('Maximo entre suma_a_b(5,5) y factorial(3): ', maximo(suma_a_b(5,5), factorial(3)))
+ENDFUNCTION
+
+CALL main_func();
+
+!   MAS MAS MAS 
+FUNCTION verificar_do_if(A, B, C)
+    DO
+        WRITE('Inicio primer DO')
+        
+        IF A == 1 THEN
+            WRITE('A es 1 dentro del IF')
+            
+            DO I = 1, B
+                WRITE('Segundo DO dentro del IF, I=', I)
+                
+                IF C > 0 THEN
+                    WRITE('C es positivo dentro del segundo IF')
+                    
+                    DO J = 1, C
+                        WRITE('Tercer DO dentro del segundo IF, J=', J)
+                        
+                        IF J == 2 THEN
+                            WRITE('J es igual a 2 dentro del tercer IF')
+                        ELSE
+                            WRITE('J no es 2 dentro del tercer IF')
+                        ENDIF
+                    ENDDO
+                    
+                ELSE
+                    WRITE('C no es positivo dentro del segundo IF')
+                ENDIF
+                
+            ENDDO
+            
+        ELSE
+            WRITE('A no es 1')
+        ENDIF
+        
+        RETURN 0
+    ENDDO
+ENDFUNCTION
+
+
+
+minumero = main_func();
+numero_verificado = verificar_do_if(1, 3, 5);
+
+CALL verificar_do_if(1, 3, 5);
+
+END PROGRAM Prueba

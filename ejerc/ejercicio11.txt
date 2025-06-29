@@ -1,0 +1,9 @@
+PROGRAM ConRetorno
+FUNCTION cuadrado(x)
+    RETURN x * x
+ENDFUNCTION
+
+INTEGER:: resultado
+resultado = cuadrado(4);
+WRITE('Cuadrado:', resultado)
+END PROGRAM ConRetorno

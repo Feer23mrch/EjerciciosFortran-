@@ -1,0 +1,17 @@
+PROGRAM Programa1
+  ! ANIDACIONES DE DO
+
+DO
+    WRITE('Primer nivel DO')
+    DO
+        WRITE('Segundo nivel DO')
+        DO
+            WRITE('Tercer nivel DO')
+            DO
+                WRITE('Cuarto nivel DO')
+            ENDDO
+        ENDDO
+    ENDDO
+ENDDO
+
+END PROGRAM Programa1

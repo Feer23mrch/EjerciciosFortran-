@@ -94,7 +94,11 @@ string indent(const string& s) {
     return indented;
 }
 
-#line 98 "fortran.tab.c"
+string last_prompt = "";
+bool pending_prompt = false;
+
+
+#line 102 "fortran.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -144,48 +148,51 @@ enum yysymbol_kind_t
   YYSYMBOL_DO = 19,                        /* DO  */
   YYSYMBOL_ENDDO = 20,                     /* ENDDO  */
   YYSYMBOL_CALL = 21,                      /* CALL  */
-  YYSYMBOL_FOR = 22,                       /* FOR  */
-  YYSYMBOL_TO = 23,                        /* TO  */
-  YYSYMBOL_STEP = 24,                      /* STEP  */
-  YYSYMBOL_ENDFOR = 25,                    /* ENDFOR  */
-  YYSYMBOL_RETURN = 26,                    /* RETURN  */
-  YYSYMBOL_COMMA = 27,                     /* COMMA  */
-  YYSYMBOL_PLUS = 28,                      /* PLUS  */
-  YYSYMBOL_MINUS = 29,                     /* MINUS  */
-  YYSYMBOL_MULT = 30,                      /* MULT  */
-  YYSYMBOL_INTEGER = 31,                   /* INTEGER  */
-  YYSYMBOL_REAL = 32,                      /* REAL  */
-  YYSYMBOL_CHARACTER = 33,                 /* CHARACTER  */
-  YYSYMBOL_DOUBLECOLON = 34,               /* DOUBLECOLON  */
-  YYSYMBOL_LEN = 35,                       /* LEN  */
-  YYSYMBOL_ASTERISK = 36,                  /* ASTERISK  */
-  YYSYMBOL_EQ = 37,                        /* EQ  */
-  YYSYMBOL_GT = 38,                        /* GT  */
-  YYSYMBOL_LT = 39,                        /* LT  */
-  YYSYMBOL_GE = 40,                        /* GE  */
-  YYSYMBOL_LE = 41,                        /* LE  */
-  YYSYMBOL_NEQ = 42,                       /* NEQ  */
-  YYSYMBOL_COMMENT = 43,                   /* COMMENT  */
-  YYSYMBOL_WHITESPACE = 44,                /* WHITESPACE  */
-  YYSYMBOL_YYACCEPT = 45,                  /* $accept  */
-  YYSYMBOL_program = 46,                   /* program  */
-  YYSYMBOL_statements = 47,                /* statements  */
-  YYSYMBOL_statement = 48,                 /* statement  */
-  YYSYMBOL_variable_declaration = 49,      /* variable_declaration  */
-  YYSYMBOL_id_list = 50,                   /* id_list  */
-  YYSYMBOL_param_list = 51,                /* param_list  */
-  YYSYMBOL_opt_param_list = 52,            /* opt_param_list  */
-  YYSYMBOL_param_call_list = 53,           /* param_call_list  */
-  YYSYMBOL_expr_list = 54,                 /* expr_list  */
-  YYSYMBOL_if_statement = 55,              /* if_statement  */
-  YYSYMBOL_write_statement = 56,           /* write_statement  */
-  YYSYMBOL_function_decl = 57,             /* function_decl  */
-  YYSYMBOL_call_statement = 58,            /* call_statement  */
-  YYSYMBOL_for_loop = 59,                  /* for_loop  */
-  YYSYMBOL_do_loop = 60,                   /* do_loop  */
-  YYSYMBOL_return_statement = 61,          /* return_statement  */
-  YYSYMBOL_value = 62,                     /* value  */
-  YYSYMBOL_expression = 63                 /* expression  */
+  YYSYMBOL_READ = 22,                      /* READ  */
+  YYSYMBOL_FOR = 23,                       /* FOR  */
+  YYSYMBOL_TO = 24,                        /* TO  */
+  YYSYMBOL_STEP = 25,                      /* STEP  */
+  YYSYMBOL_ENDFOR = 26,                    /* ENDFOR  */
+  YYSYMBOL_RETURN = 27,                    /* RETURN  */
+  YYSYMBOL_COMMA = 28,                     /* COMMA  */
+  YYSYMBOL_PLUS = 29,                      /* PLUS  */
+  YYSYMBOL_MINUS = 30,                     /* MINUS  */
+  YYSYMBOL_MULT = 31,                      /* MULT  */
+  YYSYMBOL_INTEGER = 32,                   /* INTEGER  */
+  YYSYMBOL_REAL = 33,                      /* REAL  */
+  YYSYMBOL_CHARACTER = 34,                 /* CHARACTER  */
+  YYSYMBOL_DOUBLECOLON = 35,               /* DOUBLECOLON  */
+  YYSYMBOL_LEN = 36,                       /* LEN  */
+  YYSYMBOL_ASTERISK = 37,                  /* ASTERISK  */
+  YYSYMBOL_EQ = 38,                        /* EQ  */
+  YYSYMBOL_GT = 39,                        /* GT  */
+  YYSYMBOL_LT = 40,                        /* LT  */
+  YYSYMBOL_GE = 41,                        /* GE  */
+  YYSYMBOL_LE = 42,                        /* LE  */
+  YYSYMBOL_NEQ = 43,                       /* NEQ  */
+  YYSYMBOL_COMMENT = 44,                   /* COMMENT  */
+  YYSYMBOL_WHITESPACE = 45,                /* WHITESPACE  */
+  YYSYMBOL_DIV = 46,                       /* DIV  */
+  YYSYMBOL_POW = 47,                       /* POW  */
+  YYSYMBOL_YYACCEPT = 48,                  /* $accept  */
+  YYSYMBOL_program = 49,                   /* program  */
+  YYSYMBOL_statements = 50,                /* statements  */
+  YYSYMBOL_statement = 51,                 /* statement  */
+  YYSYMBOL_raw_block = 52,                 /* raw_block  */
+  YYSYMBOL_variable_declaration = 53,      /* variable_declaration  */
+  YYSYMBOL_id_list = 54,                   /* id_list  */
+  YYSYMBOL_param_list = 55,                /* param_list  */
+  YYSYMBOL_opt_param_list = 56,            /* opt_param_list  */
+  YYSYMBOL_param_call_list = 57,           /* param_call_list  */
+  YYSYMBOL_expr_list = 58,                 /* expr_list  */
+  YYSYMBOL_if_statement = 59,              /* if_statement  */
+  YYSYMBOL_write_statement = 60,           /* write_statement  */
+  YYSYMBOL_function_decl = 61,             /* function_decl  */
+  YYSYMBOL_call_statement = 62,            /* call_statement  */
+  YYSYMBOL_for_loop = 63,                  /* for_loop  */
+  YYSYMBOL_do_loop = 64,                   /* do_loop  */
+  YYSYMBOL_return_statement = 65,          /* return_statement  */
+  YYSYMBOL_expression = 66                 /* expression  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -513,19 +520,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   300
+#define YYLAST   462
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  45
+#define YYNTOKENS  48
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  19
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  57
+#define YYNRULES  66
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  136
+#define YYNSTATES  160
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   299
+#define YYMAXUTOK   302
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -568,19 +575,21 @@ static const yytype_int8 yytranslate[] =
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42,    43,    44
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
+      45,    46,    47
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    55,    55,    65,    66,    74,    75,    76,    77,    78,
-      79,    80,    81,    82,    89,   103,   104,   105,   106,   107,
-     111,   117,   126,   127,   135,   141,   148,   149,   157,   159,
-     168,   175,   186,   192,   201,   212,   218,   224,   235,   247,
-     253,   260,   274,   283,   284,   285,   290,   295,   300,   305,
-     310,   319,   320,   321,   327,   333,   339,   346
+       0,    63,    63,    81,    82,    92,   105,   109,   121,   133,
+     145,   157,   169,   181,   194,   211,   236,   245,   253,   261,
+     271,   272,   273,   274,   275,   279,   281,   286,   287,   295,
+     301,   308,   309,   317,   319,   328,   335,   346,   360,   373,
+     389,   400,   406,   412,   422,   434,   440,   447,   456,   465,
+     474,   475,   476,   478,   483,   488,   493,   498,   503,   509,
+     514,   519,   524,   529,   535,   541,   547
 };
 #endif
 
@@ -599,14 +608,15 @@ static const char *const yytname[] =
   "\"end of file\"", "error", "\"invalid token\"", "ID", "STRING_LITERAL",
   "NUMBER", "PROGRAM", "END", "IF", "THEN", "ENDIF", "ELSE", "WRITE",
   "ASSIGN", "SEMICOLON", "LPAREN", "RPAREN", "FUNCTION", "ENDFUNCTION",
-  "DO", "ENDDO", "CALL", "FOR", "TO", "STEP", "ENDFOR", "RETURN", "COMMA",
-  "PLUS", "MINUS", "MULT", "INTEGER", "REAL", "CHARACTER", "DOUBLECOLON",
-  "LEN", "ASTERISK", "EQ", "GT", "LT", "GE", "LE", "NEQ", "COMMENT",
-  "WHITESPACE", "$accept", "program", "statements", "statement",
-  "variable_declaration", "id_list", "param_list", "opt_param_list",
-  "param_call_list", "expr_list", "if_statement", "write_statement",
-  "function_decl", "call_statement", "for_loop", "do_loop",
-  "return_statement", "value", "expression", YY_NULLPTR
+  "DO", "ENDDO", "CALL", "READ", "FOR", "TO", "STEP", "ENDFOR", "RETURN",
+  "COMMA", "PLUS", "MINUS", "MULT", "INTEGER", "REAL", "CHARACTER",
+  "DOUBLECOLON", "LEN", "ASTERISK", "EQ", "GT", "LT", "GE", "LE", "NEQ",
+  "COMMENT", "WHITESPACE", "DIV", "POW", "$accept", "program",
+  "statements", "statement", "raw_block", "variable_declaration",
+  "id_list", "param_list", "opt_param_list", "param_call_list",
+  "expr_list", "if_statement", "write_statement", "function_decl",
+  "call_statement", "for_loop", "do_loop", "return_statement",
+  "expression", YY_NULLPTR
 };
 
 static const char *
@@ -616,7 +626,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-45)
+#define YYPACT_NINF (-46)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -630,20 +640,22 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      10,    16,    17,   -45,   -45,    61,    25,    35,     2,    15,
-      42,    28,    62,    63,    86,    36,    37,    -7,   -45,   -45,
-     -45,   -45,   -45,   -45,   -45,   -45,   -45,   -45,    86,    74,
-     -45,   -45,   232,    86,    64,    68,    99,   247,    33,    71,
-      70,   -45,   247,    80,   100,   100,    -3,   100,    14,   -45,
-     -45,     2,     2,     2,     2,     2,     2,    -6,    80,    34,
-     -45,     2,   -45,   126,   -45,   119,     2,   123,    86,    86,
-      86,   -45,    79,    79,    98,   120,    79,   -45,     3,   253,
-     258,   258,   258,   258,   258,   122,    86,   -45,   -45,    24,
-     153,    59,   -45,   127,    45,    80,   241,   -45,    47,   107,
-     107,   -45,   137,   110,   144,   -45,   -45,   -45,    80,   -45,
-     147,   -45,     2,   -45,   139,    86,     2,   -45,   -45,   100,
-     135,   180,   -45,   247,   -45,    80,   247,    79,   121,   -45,
-     207,   234,   100,   -45,   -45,    79
+       1,    12,    21,   -46,   -46,   119,    32,    42,    92,    47,
+      60,    13,    64,    63,    79,    92,    78,    82,     5,   -46,
+     -46,   -46,   -46,   -46,   -46,   -46,   -46,   -46,   -46,    92,
+      90,   103,   -46,   -46,    92,   296,   100,   104,    -2,   147,
+      27,   -46,   392,    97,    77,   107,   392,   120,   120,     7,
+     120,   315,   -46,    68,   353,   -46,    92,    92,    92,    92,
+      92,    92,    92,    92,    92,    92,    92,   108,   -14,   392,
+       3,   -46,    92,   -46,   115,   -46,   -46,   175,   -46,    83,
+     101,    92,   -46,   106,   106,   116,   122,   106,   -46,   -46,
+      48,   392,   -46,    58,   405,   405,   415,   347,   366,   366,
+     366,   366,   366,   415,   415,   -46,   125,    92,   -46,   -46,
+      73,   203,    -5,    92,   -46,   129,    93,   113,   373,   142,
+     112,   143,   -46,    92,   -46,   -46,   -46,   392,   -46,   146,
+     -46,   -46,    92,   334,   -46,   140,   141,    92,   -46,   120,
+     144,   392,   231,   -46,   392,   -46,   -46,   153,   392,   106,
+     123,   -46,   259,   148,   287,   120,   -46,   -46,   -46,   106
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -652,33 +664,35 @@ static const yytype_int16 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     3,     1,     0,     0,     0,     0,     0,
-       0,     3,     0,     0,     0,     0,     0,     0,    14,     4,
-      12,     5,     6,     7,     9,    10,     8,    11,     0,     0,
-      43,    44,     0,     0,     0,    43,     0,     3,     0,     0,
-      43,    51,    52,    42,     0,     0,     0,     0,     0,     2,
-       3,     0,     0,     0,     0,     0,     0,     0,    28,     0,
-       3,     0,    39,     0,    35,     0,     0,     0,     0,     0,
-       0,    20,    15,    16,     0,     0,    19,    13,     0,    45,
-      47,    48,    49,    50,    46,    32,     0,    22,    25,     0,
-       0,     0,    40,     0,     0,    26,     0,    57,     0,    53,
-      54,    55,     0,     0,     0,    30,     3,    33,    29,    24,
-       0,    34,     0,    36,     0,     0,     0,    56,    21,     0,
-       0,     0,    23,     3,    37,    27,     3,    18,     0,    31,
-       0,     0,     0,    41,    38,    17
+       0,     3,     0,     0,     0,     0,     0,     0,     0,    14,
+       4,    12,     5,     6,     7,     9,    10,     8,    11,     0,
+       0,    51,    50,    52,     0,     0,     0,     0,    51,     0,
+       0,    19,     3,     0,     0,     0,    49,     0,     0,     0,
+       0,     0,     2,     0,     0,     3,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,    50,     0,    33,
+       0,     3,     0,    45,     0,    48,    17,     0,    41,     0,
+       0,     0,    25,    20,    21,     0,     0,    24,    13,    65,
+       0,    31,    66,     0,    59,    60,    61,    53,    55,    56,
+      57,    58,    54,    62,    63,    37,    38,     0,    27,    30,
+       0,     0,     0,     0,    46,     0,     0,     0,     0,     0,
+       0,     0,    64,     0,    35,     3,    39,    34,    29,     0,
+      40,    18,     0,     0,    42,     0,     0,     0,    26,     0,
+       0,    32,     0,    28,     3,    16,    43,     0,     3,    23,
+       0,    36,     0,     0,     0,     0,    47,    15,    44,    22
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -45,   -45,   -11,   -45,   -45,   -44,   -45,   -45,    87,   -45,
-     -45,   -45,   -45,   -45,   -45,   -45,   -45,     1,   -10
+     -46,   -46,   -11,   -46,   -46,   -46,   -45,   -46,   -46,    86,
+     -46,   -46,   -46,   -46,   -46,   -46,    -1,   -46,    -7
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     5,    19,    20,    72,    89,    60,    94,    57,
-      21,    22,    23,    24,    25,    26,    27,    42,    95
+       0,     2,     5,    20,    40,    21,    83,   110,    71,    90,
+      68,    22,    23,    24,    25,    26,    27,    28,    91
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -686,114 +700,150 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-      36,    73,    74,    76,    43,    30,     6,    31,    46,    32,
-      85,     8,    37,   105,   106,     9,     1,     4,    48,     3,
-      10,    86,    11,    58,    12,    13,    63,    47,    77,    14,
-      33,    35,    75,    31,    15,    16,    17,    87,    28,    78,
-     109,    29,    68,    69,    70,    34,    18,    64,    65,    90,
-      88,   110,    79,    80,    81,    82,    83,    84,    99,   100,
-     101,   114,    91,   117,     6,    38,    39,    96,     7,     8,
-      44,    45,   115,     9,   115,   127,   108,    49,    10,    59,
-      11,    61,    12,    13,    66,    67,   112,    14,   135,    40,
-      41,    31,    15,    16,    17,   121,    51,    52,    53,    54,
-      55,    56,     6,    71,    18,   125,   102,     8,    68,    69,
-      70,     9,   130,   123,   103,   131,    10,   126,    11,    62,
-      12,    13,    40,    41,    31,    14,    40,    41,    31,     6,
-      15,    16,    17,   104,     8,    93,   107,    70,     9,    97,
-     118,   113,    18,    10,   119,    11,    92,    12,    13,   120,
-     122,   128,    14,   124,    98,   132,     6,    15,    16,    17,
-       0,     8,     0,     0,     0,     9,     0,     0,     0,    18,
-      10,   111,    11,     0,    12,    13,     0,     0,     0,    14,
-       0,     0,     0,     6,    15,    16,    17,     0,     8,     0,
-     129,     0,     9,     0,     0,     0,    18,    10,     0,    11,
-       0,    12,    13,     0,     0,     0,    14,     0,     0,     0,
-       6,    15,    16,    17,     0,     8,     0,     0,     0,     9,
-       0,     0,     0,    18,    10,     0,    11,   133,    12,    13,
-       0,     0,     0,    14,     0,     0,     0,     6,    15,    16,
-      17,    50,     8,     0,     0,     0,     9,     0,     0,     0,
-      18,    10,     0,    11,     0,    12,    13,     0,     0,   134,
-      14,     0,     0,     0,   116,    15,    16,    17,     0,    51,
-      52,    53,    54,    55,    56,     0,     0,    18,    51,    52,
-      53,    54,    55,    56,    51,    52,    53,    54,    55,    56,
-      -1,    52,    53,    54,    55,    56,    -1,    -1,    -1,    -1,
-      -1
+      39,    35,   106,    84,    42,    87,   108,     1,    46,   131,
+      41,    72,    85,    53,   107,     3,    38,    32,    33,   109,
+      49,     4,    51,   132,    56,    57,    58,    54,    34,    69,
+      74,    77,    11,    59,    60,    61,    62,    63,    64,    76,
+      50,    65,    66,    86,    93,    29,    11,    75,    30,    94,
+      95,    96,    97,    98,    99,   100,   101,   102,   103,   104,
+     111,     6,    36,    37,   122,   112,     8,    43,   124,   125,
+       9,    31,    32,    33,   118,    10,   123,    11,    44,    12,
+      13,    14,    45,    34,    89,    15,    31,    32,    33,   128,
+      16,    17,    18,    52,   149,    31,    32,    33,    34,   115,
+     127,   129,    19,    31,    67,    33,   133,    34,    80,   135,
+     159,    78,    79,    47,   142,    34,   141,    48,    53,    70,
+      81,   123,     6,    82,   105,   144,     7,     8,   113,   117,
+     148,     9,   120,   152,   119,   121,    10,   154,    11,   126,
+      12,    13,    14,   134,   136,   138,    15,   139,   140,   143,
+       6,    16,    17,    18,   146,     8,   153,   147,   155,     9,
+     150,     0,   157,    19,    10,   116,    11,    73,    12,    13,
+      14,     0,     0,     0,    15,     0,     0,     0,     6,    16,
+      17,    18,     0,     8,     0,     0,     0,     9,     0,     0,
+       0,    19,    10,     0,    11,   114,    12,    13,    14,     0,
+       0,     0,    15,     0,     0,     0,     6,    16,    17,    18,
+       0,     8,     0,     0,     0,     9,     0,     0,     0,    19,
+      10,   130,    11,     0,    12,    13,    14,     0,     0,     0,
+      15,     0,     0,     0,     6,    16,    17,    18,     0,     8,
+       0,   151,     0,     9,     0,     0,     0,    19,    10,     0,
+      11,     0,    12,    13,    14,     0,     0,     0,    15,     0,
+       0,     0,     6,    16,    17,    18,     0,     8,     0,     0,
+       0,     9,     0,     0,     0,    19,    10,     0,    11,   156,
+      12,    13,    14,     0,     0,     0,    15,     0,     0,     0,
+       6,    16,    17,    18,     0,     8,     0,     0,     0,     9,
+       0,     0,     0,    19,    10,    55,    11,     0,    12,    13,
+      14,     0,     0,   158,    15,     0,     0,     0,     0,    16,
+      17,    18,     0,     0,     0,    56,    57,    58,     0,    88,
+       0,    19,     0,     0,    59,    60,    61,    62,    63,    64,
+       0,     0,    65,    66,    56,    57,    58,     0,   145,     0,
+       0,     0,     0,    59,    60,    61,    62,    63,    64,     0,
+       0,    65,    66,    56,    57,    58,     0,     0,     0,    92,
+       0,     0,    59,    60,    61,    62,    63,    64,     0,     0,
+      65,    66,    56,    57,    58,    -1,    60,    61,    62,    63,
+      64,    59,    60,    61,    62,    63,    64,   137,     0,    65,
+      66,     0,    56,    57,    58,    -1,    -1,    -1,    -1,    -1,
+       0,    59,    60,    61,    62,    63,    64,     0,     0,    65,
+      66,    56,    57,    58,     0,     0,     0,     0,     0,     0,
+      59,    60,    61,    62,    63,    64,    58,     0,    65,    66,
+       0,     0,     0,    59,    60,    61,    62,    63,    64,     0,
+       0,    65,    66,    59,    60,    61,    62,    63,    64,     0,
+       0,     0,    66
 };
 
 static const yytype_int16 yycheck[] =
 {
-      11,    45,     5,    47,    14,     3,     3,     5,    15,     8,
-      16,     8,    11,    10,    11,    12,     6,     0,    28,     3,
-      17,    27,    19,    33,    21,    22,    37,    34,    14,    26,
-      15,     3,    35,     5,    31,    32,    33,     3,    13,    50,
-      16,     6,    28,    29,    30,     3,    43,    14,    15,    60,
-      16,    27,    51,    52,    53,    54,    55,    56,    68,    69,
-      70,    16,    61,    16,     3,     3,     3,    66,     7,     8,
-      34,    34,    27,    12,    27,   119,    86,     3,    17,    15,
-      19,    13,    21,    22,    13,    15,    27,    26,   132,     3,
-       4,     5,    31,    32,    33,   106,    37,    38,    39,    40,
-      41,    42,     3,     3,    43,   115,    27,     8,    28,    29,
-      30,    12,   123,   112,    16,   126,    17,   116,    19,    20,
-      21,    22,     3,     4,     5,    26,     3,     4,     5,     3,
-      31,    32,    33,    13,     8,    16,    14,    30,    12,    16,
-       3,    14,    43,    17,    34,    19,    20,    21,    22,     5,
-       3,    16,    26,    14,    67,    34,     3,    31,    32,    33,
-      -1,     8,    -1,    -1,    -1,    12,    -1,    -1,    -1,    43,
-      17,    18,    19,    -1,    21,    22,    -1,    -1,    -1,    26,
-      -1,    -1,    -1,     3,    31,    32,    33,    -1,     8,    -1,
-      10,    -1,    12,    -1,    -1,    -1,    43,    17,    -1,    19,
-      -1,    21,    22,    -1,    -1,    -1,    26,    -1,    -1,    -1,
-       3,    31,    32,    33,    -1,     8,    -1,    -1,    -1,    12,
-      -1,    -1,    -1,    43,    17,    -1,    19,    20,    21,    22,
-      -1,    -1,    -1,    26,    -1,    -1,    -1,     3,    31,    32,
-      33,     9,     8,    -1,    -1,    -1,    12,    -1,    -1,    -1,
-      43,    17,    -1,    19,    -1,    21,    22,    -1,    -1,    25,
-      26,    -1,    -1,    -1,    23,    31,    32,    33,    -1,    37,
-      38,    39,    40,    41,    42,    -1,    -1,    43,    37,    38,
-      39,    40,    41,    42,    37,    38,    39,    40,    41,    42,
-      37,    38,    39,    40,    41,    42,    38,    39,    40,    41,
-      42
+      11,     8,    16,    48,    11,    50,     3,     6,    15,    14,
+      11,    13,     5,    15,    28,     3,     3,     4,     5,    16,
+      15,     0,    29,    28,    29,    30,    31,    34,    15,    36,
+       3,    42,    19,    38,    39,    40,    41,    42,    43,    40,
+      35,    46,    47,    36,    55,    13,    19,    20,     6,    56,
+      57,    58,    59,    60,    61,    62,    63,    64,    65,    66,
+      71,     3,    15,     3,    16,    72,     8,     3,    10,    11,
+      12,     3,     4,     5,    81,    17,    28,    19,    15,    21,
+      22,    23,     3,    15,    16,    27,     3,     4,     5,    16,
+      32,    33,    34,     3,   139,     3,     4,     5,    15,    16,
+     107,    28,    44,     3,     4,     5,   113,    15,    31,    16,
+     155,    14,    15,    35,   125,    15,   123,    35,    15,    15,
+      13,    28,     3,     3,    16,   132,     7,     8,    13,    28,
+     137,    12,    16,   144,    28,    13,    17,   148,    19,    14,
+      21,    22,    23,    14,    31,     3,    27,    35,     5,     3,
+       3,    32,    33,    34,    14,     8,     3,    16,    35,    12,
+      16,    -1,    14,    44,    17,    79,    19,    20,    21,    22,
+      23,    -1,    -1,    -1,    27,    -1,    -1,    -1,     3,    32,
+      33,    34,    -1,     8,    -1,    -1,    -1,    12,    -1,    -1,
+      -1,    44,    17,    -1,    19,    20,    21,    22,    23,    -1,
+      -1,    -1,    27,    -1,    -1,    -1,     3,    32,    33,    34,
+      -1,     8,    -1,    -1,    -1,    12,    -1,    -1,    -1,    44,
+      17,    18,    19,    -1,    21,    22,    23,    -1,    -1,    -1,
+      27,    -1,    -1,    -1,     3,    32,    33,    34,    -1,     8,
+      -1,    10,    -1,    12,    -1,    -1,    -1,    44,    17,    -1,
+      19,    -1,    21,    22,    23,    -1,    -1,    -1,    27,    -1,
+      -1,    -1,     3,    32,    33,    34,    -1,     8,    -1,    -1,
+      -1,    12,    -1,    -1,    -1,    44,    17,    -1,    19,    20,
+      21,    22,    23,    -1,    -1,    -1,    27,    -1,    -1,    -1,
+       3,    32,    33,    34,    -1,     8,    -1,    -1,    -1,    12,
+      -1,    -1,    -1,    44,    17,     9,    19,    -1,    21,    22,
+      23,    -1,    -1,    26,    27,    -1,    -1,    -1,    -1,    32,
+      33,    34,    -1,    -1,    -1,    29,    30,    31,    -1,    14,
+      -1,    44,    -1,    -1,    38,    39,    40,    41,    42,    43,
+      -1,    -1,    46,    47,    29,    30,    31,    -1,    14,    -1,
+      -1,    -1,    -1,    38,    39,    40,    41,    42,    43,    -1,
+      -1,    46,    47,    29,    30,    31,    -1,    -1,    -1,    16,
+      -1,    -1,    38,    39,    40,    41,    42,    43,    -1,    -1,
+      46,    47,    29,    30,    31,    38,    39,    40,    41,    42,
+      43,    38,    39,    40,    41,    42,    43,    24,    -1,    46,
+      47,    -1,    29,    30,    31,    39,    40,    41,    42,    43,
+      -1,    38,    39,    40,    41,    42,    43,    -1,    -1,    46,
+      47,    29,    30,    31,    -1,    -1,    -1,    -1,    -1,    -1,
+      38,    39,    40,    41,    42,    43,    31,    -1,    46,    47,
+      -1,    -1,    -1,    38,    39,    40,    41,    42,    43,    -1,
+      -1,    46,    47,    38,    39,    40,    41,    42,    43,    -1,
+      -1,    -1,    47
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     6,    46,     3,     0,    47,     3,     7,     8,    12,
-      17,    19,    21,    22,    26,    31,    32,    33,    43,    48,
-      49,    55,    56,    57,    58,    59,    60,    61,    13,     6,
-       3,     5,    62,    15,     3,     3,    47,    62,     3,     3,
-       3,     4,    62,    63,    34,    34,    15,    34,    63,     3,
-       9,    37,    38,    39,    40,    41,    42,    54,    63,    15,
-      52,    13,    20,    47,    14,    15,    13,    15,    28,    29,
-      30,     3,    50,    50,     5,    35,    50,    14,    47,    62,
-      62,    62,    62,    62,    62,    16,    27,     3,    16,    51,
-      47,    62,    20,    16,    53,    63,    62,    16,    53,    63,
-      63,    63,    27,    16,    13,    10,    11,    14,    63,    16,
-      27,    18,    27,    14,    16,    27,    23,    16,     3,    34,
-       5,    47,     3,    62,    14,    63,    62,    50,    16,    10,
-      47,    47,    34,    20,    25,    50
+       0,     6,    49,     3,     0,    50,     3,     7,     8,    12,
+      17,    19,    21,    22,    23,    27,    32,    33,    34,    44,
+      51,    53,    59,    60,    61,    62,    63,    64,    65,    13,
+       6,     3,     4,     5,    15,    66,    15,     3,     3,    50,
+      52,    64,    66,     3,    15,     3,    66,    35,    35,    15,
+      35,    66,     3,    15,    66,     9,    29,    30,    31,    38,
+      39,    40,    41,    42,    43,    46,    47,     4,    58,    66,
+      15,    56,    13,    20,     3,    20,    64,    50,    14,    15,
+      31,    13,     3,    54,    54,     5,    36,    54,    14,    16,
+      57,    66,    16,    50,    66,    66,    66,    66,    66,    66,
+      66,    66,    66,    66,    66,    16,    16,    28,     3,    16,
+      55,    50,    66,    13,    20,    16,    57,    28,    66,    28,
+      16,    13,    16,    28,    10,    11,    14,    66,    16,    28,
+      18,    14,    28,    66,    14,    16,    31,    24,     3,    35,
+       5,    66,    50,     3,    66,    14,    14,    16,    66,    54,
+      16,    10,    50,     3,    50,    35,    20,    14,    26,    54
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    45,    46,    47,    47,    48,    48,    48,    48,    48,
-      48,    48,    48,    48,    48,    49,    49,    49,    49,    49,
-      50,    50,    51,    51,    52,    52,    53,    53,    54,    54,
-      55,    55,    56,    56,    57,    58,    58,    58,    59,    60,
-      60,    60,    61,    62,    62,    62,    62,    62,    62,    62,
-      62,    63,    63,    63,    63,    63,    63,    63
+       0,    48,    49,    50,    50,    51,    51,    51,    51,    51,
+      51,    51,    51,    51,    51,    51,    52,    52,    52,    52,
+      53,    53,    53,    53,    53,    54,    54,    55,    55,    56,
+      56,    57,    57,    58,    58,    59,    59,    60,    60,    60,
+      61,    62,    62,    62,    63,    64,    64,    64,    64,    65,
+      66,    66,    66,    66,    66,    66,    66,    66,    66,    66,
+      66,    66,    66,    66,    66,    66,    66
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     6,     0,     2,     1,     1,     1,     1,     1,
-       1,     1,     1,     4,     1,     3,     3,     8,     6,     3,
-       1,     3,     1,     3,     3,     2,     1,     3,     1,     3,
-       5,     7,     4,     5,     5,     3,     5,     6,     8,     3,
-       4,     8,     2,     1,     1,     3,     3,     3,     3,     3,
-       3,     1,     1,     3,     3,     3,     4,     3
+       1,     1,     1,     4,     1,     8,     5,     2,     4,     1,
+       3,     3,     8,     6,     3,     1,     3,     1,     3,     3,
+       2,     1,     3,     1,     3,     5,     7,     4,     4,     5,
+       5,     3,     5,     6,     8,     3,     4,     8,     3,     2,
+       1,     1,     1,     3,     3,     3,     3,     3,     3,     3,
+       3,     3,     3,     3,     4,     3,     3
 };
 
 
@@ -1257,46 +1307,189 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: PROGRAM ID statements END PROGRAM ID  */
-#line 56 "fortran.y"
+#line 64 "fortran.y"
     {
-        string output = "def main():\n" + indent((yyvsp[-3].sval)) + 
+        string body = string((yyvsp[-3].sval));
+
+        if (pending_prompt && !last_prompt.empty()) {
+            body += "print(" + last_prompt + ")\n";
+            last_prompt = "";
+            pending_prompt = false;
+        }
+
+        string output = "def main():\n" + indent(body) + 
                         "\n\nif __name__ == \"__main__\":\n    main()\n\n" +
                         "# PROGRAMA FUNCIONANDO... cls\n";
         cout << output;
     }
-#line 1268 "fortran.tab.c"
+#line 1326 "fortran.tab.c"
     break;
 
   case 3: /* statements: %empty  */
-#line 65 "fortran.y"
-                                    { (yyval.sval) = strdup(""); }
-#line 1274 "fortran.tab.c"
+#line 81 "fortran.y"
+    { (yyval.sval) = strdup(""); }
+#line 1332 "fortran.tab.c"
     break;
 
   case 4: /* statements: statements statement  */
-#line 66 "fortran.y"
-                                   {
-        string combined = string((yyvsp[-1].sval)) + string((yyvsp[0].sval));
+#line 82 "fortran.y"
+                           {
+        string before = string((yyvsp[-1].sval));
+        string current = string((yyvsp[0].sval));
+        string combined = before + current;
         free((yyvsp[-1].sval)); free((yyvsp[0].sval));
         (yyval.sval) = strdup(combined.c_str());
     }
-#line 1284 "fortran.tab.c"
+#line 1344 "fortran.tab.c"
+    break;
+
+  case 5: /* statement: if_statement  */
+#line 93 "fortran.y"
+      {
+          string code = (yyvsp[0].sval);
+
+                string indent_print = indent("print(" + last_prompt + ")\n");
+              
+              last_prompt = "";
+              pending_prompt = false;
+          
+
+          free((yyvsp[0].sval));
+          (yyval.sval) = strdup(code.c_str());
+      }
+#line 1361 "fortran.tab.c"
+    break;
+
+  case 6: /* statement: write_statement  */
+#line 106 "fortran.y"
+      {
+          (yyval.sval) = (yyvsp[0].sval); 
+      }
+#line 1369 "fortran.tab.c"
+    break;
+
+  case 7: /* statement: function_decl  */
+#line 110 "fortran.y"
+      {
+          string extra = "";
+          if (pending_prompt && !last_prompt.empty()) {
+              extra = "print(" + last_prompt + ")\n";
+              last_prompt = "";
+              pending_prompt = false;
+          }
+          string code = extra + (yyvsp[0].sval);
+          free((yyvsp[0].sval));
+          (yyval.sval) = strdup(code.c_str());
+      }
+#line 1385 "fortran.tab.c"
+    break;
+
+  case 8: /* statement: do_loop  */
+#line 122 "fortran.y"
+      {
+          string extra = "";
+          if (pending_prompt && !last_prompt.empty()) {
+              extra = "print(" + last_prompt + ")\n";
+              last_prompt = "";
+              pending_prompt = false;
+          }
+          string code = extra + (yyvsp[0].sval);
+          free((yyvsp[0].sval));
+          (yyval.sval) = strdup(code.c_str());
+      }
+#line 1401 "fortran.tab.c"
+    break;
+
+  case 9: /* statement: call_statement  */
+#line 134 "fortran.y"
+      {
+          string extra = "";
+          if (pending_prompt && !last_prompt.empty()) {
+              extra = "print(" + last_prompt + ")\n";
+              last_prompt = "";
+              pending_prompt = false;
+          }
+          string code = extra + (yyvsp[0].sval);
+          free((yyvsp[0].sval));
+          (yyval.sval) = strdup(code.c_str());
+      }
+#line 1417 "fortran.tab.c"
+    break;
+
+  case 10: /* statement: for_loop  */
+#line 146 "fortran.y"
+      {
+          string extra = "";
+          if (pending_prompt && !last_prompt.empty()) {
+              extra = "print(" + last_prompt + ")\n";
+              last_prompt = "";
+              pending_prompt = false;
+          }
+          string code = extra + (yyvsp[0].sval);
+          free((yyvsp[0].sval));
+          (yyval.sval) = strdup(code.c_str());
+      }
+#line 1433 "fortran.tab.c"
+    break;
+
+  case 11: /* statement: return_statement  */
+#line 158 "fortran.y"
+      {
+          string extra = "";
+          if (pending_prompt && !last_prompt.empty()) {
+              extra = "print(" + last_prompt + ")\n";
+              last_prompt = "";
+              pending_prompt = false;
+          }
+          string code = extra + (yyvsp[0].sval);
+          free((yyvsp[0].sval));
+          (yyval.sval) = strdup(code.c_str());
+      }
+#line 1449 "fortran.tab.c"
+    break;
+
+  case 12: /* statement: variable_declaration  */
+#line 170 "fortran.y"
+      {
+          string extra = "";
+          if (pending_prompt && !last_prompt.empty()) {
+              extra = "print(" + last_prompt + ")\n";
+              last_prompt = "";
+              pending_prompt = false;
+          }
+          string code = extra + (yyvsp[0].sval);
+          free((yyvsp[0].sval));
+          (yyval.sval) = strdup(code.c_str());
+      }
+#line 1465 "fortran.tab.c"
     break;
 
   case 13: /* statement: ID ASSIGN expression SEMICOLON  */
-#line 83 "fortran.y"
+#line 182 "fortran.y"
       {
+          string extra = "";
+          if (pending_prompt && !last_prompt.empty()) {
+              extra = "print(" + last_prompt + ")\n";
+              last_prompt = "";
+              pending_prompt = false;
+          }
           string name = (yyvsp[-3].sval);
           string val = (yyvsp[-1].sval);
           free((yyvsp[-3].sval)); free((yyvsp[-1].sval));
-          (yyval.sval) = strdup((name + " = " + val + "\n").c_str());
+          (yyval.sval) = strdup((extra + name + " = " + val + "\n").c_str());
       }
-#line 1295 "fortran.tab.c"
+#line 1482 "fortran.tab.c"
     break;
 
   case 14: /* statement: COMMENT  */
-#line 90 "fortran.y"
+#line 195 "fortran.y"
     {
+        string extra = "";
+        if (pending_prompt && !last_prompt.empty()) {
+            extra = "print(" + last_prompt + ")\n";
+            last_prompt = "";
+            pending_prompt = false;
+        }
         string s = string((yyvsp[0].sval));
         free((yyvsp[0].sval));
         if (!s.empty() && s[0] == '!')
@@ -1304,140 +1497,206 @@ yyreduce:
         else
             s = "# " + s;
         s += "\n";
-        (yyval.sval) = strdup(s.c_str());
+        (yyval.sval) = strdup((extra + s).c_str());
     }
-#line 1310 "fortran.tab.c"
+#line 1503 "fortran.tab.c"
     break;
 
-  case 15: /* variable_declaration: INTEGER DOUBLECOLON id_list  */
-#line 103 "fortran.y"
-                                          { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1316 "fortran.tab.c"
-    break;
+  case 15: /* statement: READ LPAREN MULT COMMA MULT RPAREN ID SEMICOLON  */
+#line 212 "fortran.y"
+    {
+        string var = (yyvsp[-1].sval);
+        string prompt_text;
+        
+        if (pending_prompt && !last_prompt.empty()) {
+           
+            prompt_text = last_prompt;
+         
+            if (prompt_text.front() == '"' && prompt_text.back() == '"') {
+                prompt_text = prompt_text.substr(1, prompt_text.length() - 2);
+            }
+            last_prompt = "";
+            pending_prompt = false;
+        } else {
 
-  case 16: /* variable_declaration: REAL DOUBLECOLON id_list  */
-#line 104 "fortran.y"
-                                          { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1322 "fortran.tab.c"
-    break;
-
-  case 17: /* variable_declaration: CHARACTER LPAREN LEN ASSIGN NUMBER RPAREN DOUBLECOLON id_list  */
-#line 105 "fortran.y"
-                                                                    { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1328 "fortran.tab.c"
-    break;
-
-  case 18: /* variable_declaration: CHARACTER LPAREN NUMBER RPAREN DOUBLECOLON id_list  */
-#line 106 "fortran.y"
-                                                                    { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1334 "fortran.tab.c"
-    break;
-
-  case 19: /* variable_declaration: CHARACTER DOUBLECOLON id_list  */
-#line 107 "fortran.y"
-                                          { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1340 "fortran.tab.c"
-    break;
-
-  case 20: /* id_list: ID  */
-#line 112 "fortran.y"
-        {
-            string s = string((yyvsp[0].sval)) + " = 0\n";
-            free((yyvsp[0].sval));
-            (yyval.sval) = strdup(s.c_str());
+            prompt_text = "Ingrese " + var;
         }
-#line 1350 "fortran.tab.c"
+        
+        free((yyvsp[-1].sval));
+        (yyval.sval) = strdup((var + " = int(input(\"" + prompt_text + ":\"))\n").c_str());
+    }
+#line 1529 "fortran.tab.c"
     break;
 
-  case 21: /* id_list: id_list COMMA ID  */
-#line 118 "fortran.y"
-        {
-            string s = string((yyvsp[-2].sval)) + string((yyvsp[0].sval)) + " = 0\n";
-            free((yyvsp[-2].sval)); free((yyvsp[0].sval));
-            (yyval.sval) = strdup(s.c_str());
-        }
-#line 1360 "fortran.tab.c"
+  case 16: /* raw_block: raw_block ID ASSIGN expression SEMICOLON  */
+#line 237 "fortran.y"
+    {
+        string prev = (yyvsp[-4].sval);
+        string name = (yyvsp[-3].sval);
+        string val = (yyvsp[-1].sval);
+        string res = prev + "    " + name + " = " + val + "\n";
+        free((yyvsp[-4].sval)); free((yyvsp[-3].sval)); free((yyvsp[-1].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 1542 "fortran.tab.c"
     break;
 
-  case 22: /* param_list: ID  */
-#line 126 "fortran.y"
+  case 17: /* raw_block: raw_block do_loop  */
+#line 246 "fortran.y"
+    {
+        string prev = (yyvsp[-1].sval);
+        string loop = (yyvsp[0].sval);
+        string res = prev + indent(loop);
+        free((yyvsp[-1].sval)); free((yyvsp[0].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 1554 "fortran.tab.c"
+    break;
+
+  case 18: /* raw_block: ID ASSIGN expression SEMICOLON  */
+#line 254 "fortran.y"
+    {
+        string name = (yyvsp[-3].sval);
+        string val = (yyvsp[-1].sval);
+        string res = "    " + name + " = " + val + "\n";
+        free((yyvsp[-3].sval)); free((yyvsp[-1].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 1566 "fortran.tab.c"
+    break;
+
+  case 19: /* raw_block: do_loop  */
+#line 262 "fortran.y"
+    {
+        string loop = (yyvsp[0].sval);
+        string res = indent(loop);
+        free((yyvsp[0].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 1577 "fortran.tab.c"
+    break;
+
+  case 20: /* variable_declaration: INTEGER DOUBLECOLON id_list  */
+#line 271 "fortran.y"
+                                          { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
+#line 1583 "fortran.tab.c"
+    break;
+
+  case 21: /* variable_declaration: REAL DOUBLECOLON id_list  */
+#line 272 "fortran.y"
+                                          { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
+#line 1589 "fortran.tab.c"
+    break;
+
+  case 22: /* variable_declaration: CHARACTER LPAREN LEN ASSIGN NUMBER RPAREN DOUBLECOLON id_list  */
+#line 273 "fortran.y"
+                                                                    { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
+#line 1595 "fortran.tab.c"
+    break;
+
+  case 23: /* variable_declaration: CHARACTER LPAREN NUMBER RPAREN DOUBLECOLON id_list  */
+#line 274 "fortran.y"
+                                                                    { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
+#line 1601 "fortran.tab.c"
+    break;
+
+  case 24: /* variable_declaration: CHARACTER DOUBLECOLON id_list  */
+#line 275 "fortran.y"
+                                          { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
+#line 1607 "fortran.tab.c"
+    break;
+
+  case 25: /* id_list: ID  */
+#line 280 "fortran.y"
+        { free((yyvsp[0].sval)); (yyval.sval) = strdup(""); }
+#line 1613 "fortran.tab.c"
+    break;
+
+  case 26: /* id_list: id_list COMMA ID  */
+#line 282 "fortran.y"
+        { free((yyvsp[-2].sval)); free((yyvsp[0].sval)); (yyval.sval) = strdup(""); }
+#line 1619 "fortran.tab.c"
+    break;
+
+  case 27: /* param_list: ID  */
+#line 286 "fortran.y"
                            { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1366 "fortran.tab.c"
+#line 1625 "fortran.tab.c"
     break;
 
-  case 23: /* param_list: param_list COMMA ID  */
-#line 127 "fortran.y"
+  case 28: /* param_list: param_list COMMA ID  */
+#line 287 "fortran.y"
                           {
         string res = string((yyvsp[-2].sval)) + ", " + (yyvsp[0].sval);
         free((yyvsp[-2].sval)); free((yyvsp[0].sval));
         (yyval.sval) = strdup(res.c_str());
     }
-#line 1376 "fortran.tab.c"
+#line 1635 "fortran.tab.c"
     break;
 
-  case 24: /* opt_param_list: LPAREN param_list RPAREN  */
-#line 136 "fortran.y"
+  case 29: /* opt_param_list: LPAREN param_list RPAREN  */
+#line 296 "fortran.y"
         {
             string p = (yyvsp[-1].sval);
             free((yyvsp[-1].sval));
             (yyval.sval) = strdup(p.c_str());
         }
-#line 1386 "fortran.tab.c"
+#line 1645 "fortran.tab.c"
     break;
 
-  case 25: /* opt_param_list: LPAREN RPAREN  */
-#line 142 "fortran.y"
+  case 30: /* opt_param_list: LPAREN RPAREN  */
+#line 302 "fortran.y"
         {
-            (yyval.sval) = strdup("");  // sin parámetros
+            (yyval.sval) = strdup("");
         }
-#line 1394 "fortran.tab.c"
+#line 1653 "fortran.tab.c"
     break;
 
-  case 26: /* param_call_list: expression  */
-#line 148 "fortran.y"
+  case 31: /* param_call_list: expression  */
+#line 308 "fortran.y"
                                          { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1400 "fortran.tab.c"
+#line 1659 "fortran.tab.c"
     break;
 
-  case 27: /* param_call_list: param_call_list COMMA expression  */
-#line 149 "fortran.y"
+  case 32: /* param_call_list: param_call_list COMMA expression  */
+#line 309 "fortran.y"
                                         {
         string res = string((yyvsp[-2].sval)) + ", " + (yyvsp[0].sval);
         free((yyvsp[-2].sval)); free((yyvsp[0].sval));
         (yyval.sval) = strdup(res.c_str());
     }
-#line 1410 "fortran.tab.c"
+#line 1669 "fortran.tab.c"
     break;
 
-  case 28: /* expr_list: expression  */
-#line 158 "fortran.y"
+  case 33: /* expr_list: expression  */
+#line 318 "fortran.y"
         { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1416 "fortran.tab.c"
+#line 1675 "fortran.tab.c"
     break;
 
-  case 29: /* expr_list: expr_list COMMA expression  */
-#line 160 "fortran.y"
+  case 34: /* expr_list: expr_list COMMA expression  */
+#line 320 "fortran.y"
         {
             string combined = string((yyvsp[-2].sval)) + ", " + (yyvsp[0].sval);
             free((yyvsp[-2].sval)); free((yyvsp[0].sval));
             (yyval.sval) = strdup(combined.c_str());
         }
-#line 1426 "fortran.tab.c"
+#line 1685 "fortran.tab.c"
     break;
 
-  case 30: /* if_statement: IF value THEN statements ENDIF  */
-#line 169 "fortran.y"
+  case 35: /* if_statement: IF expression THEN statements ENDIF  */
+#line 329 "fortran.y"
     {
         string cond = (yyvsp[-3].sval);
         string body = indent((yyvsp[-1].sval));
         free((yyvsp[-3].sval)); free((yyvsp[-1].sval));
         (yyval.sval) = strdup(("if " + cond + ":\n" + body).c_str());
     }
-#line 1437 "fortran.tab.c"
+#line 1696 "fortran.tab.c"
     break;
 
-  case 31: /* if_statement: IF value THEN statements ELSE statements ENDIF  */
-#line 176 "fortran.y"
+  case 36: /* if_statement: IF expression THEN statements ELSE statements ENDIF  */
+#line 336 "fortran.y"
     {
         string cond = (yyvsp[-5].sval);
         string then_body = indent((yyvsp[-3].sval));
@@ -1445,31 +1704,63 @@ yyreduce:
         free((yyvsp[-5].sval)); free((yyvsp[-3].sval)); free((yyvsp[-1].sval));
         (yyval.sval) = strdup(("if " + cond + ":\n" + then_body + "else:\n" + else_body).c_str());
     }
-#line 1449 "fortran.tab.c"
+#line 1708 "fortran.tab.c"
     break;
 
-  case 32: /* write_statement: WRITE LPAREN expr_list RPAREN  */
-#line 187 "fortran.y"
+  case 37: /* write_statement: WRITE LPAREN STRING_LITERAL RPAREN  */
+#line 347 "fortran.y"
     {
+        string extra = "";
+        if (pending_prompt && !last_prompt.empty()) {
+            extra = "print(" + last_prompt + ")\n";
+        }
+
+        string this_print = "print(" + string((yyvsp[-1].sval)) + ")\n";
+        last_prompt = ""; 
+        pending_prompt = false;
+
+        free((yyvsp[-1].sval));
+        (yyval.sval) = strdup((extra + this_print).c_str());
+    }
+#line 1726 "fortran.tab.c"
+    break;
+
+  case 38: /* write_statement: WRITE LPAREN expr_list RPAREN  */
+#line 361 "fortran.y"
+    {
+        string extra = "";
+        if (pending_prompt && !last_prompt.empty()) {
+            extra = "print(" + last_prompt + ")\n";
+            last_prompt = "";
+            pending_prompt = false;
+        }
+        
         string s = (yyvsp[-1].sval);
         free((yyvsp[-1].sval));
-        (yyval.sval) = strdup(("print(" + s + ")\n").c_str());
+        (yyval.sval) = strdup((extra + "print(" + s + ")\n").c_str());
     }
-#line 1459 "fortran.tab.c"
+#line 1743 "fortran.tab.c"
     break;
 
-  case 33: /* write_statement: WRITE LPAREN expr_list RPAREN SEMICOLON  */
-#line 193 "fortran.y"
+  case 39: /* write_statement: WRITE LPAREN expr_list RPAREN SEMICOLON  */
+#line 374 "fortran.y"
     {
+        string extra = "";
+        if (pending_prompt && !last_prompt.empty()) {
+            extra = "print(" + last_prompt + ")\n";
+            last_prompt = "";
+            pending_prompt = false;
+        }
+        
         string s = (yyvsp[-2].sval);
         free((yyvsp[-2].sval));
-        (yyval.sval) = strdup(("print(" + s + ")\n").c_str());
+        (yyval.sval) = strdup((extra + "print(" + s + ")\n").c_str());
     }
-#line 1469 "fortran.tab.c"
+#line 1760 "fortran.tab.c"
     break;
 
-  case 34: /* function_decl: FUNCTION ID opt_param_list statements ENDFUNCTION  */
-#line 202 "fortran.y"
+  case 40: /* function_decl: FUNCTION ID opt_param_list statements ENDFUNCTION  */
+#line 390 "fortran.y"
     {
         string fname = (yyvsp[-3].sval);
         string params = (yyvsp[-2].sval);
@@ -1477,42 +1768,42 @@ yyreduce:
         free((yyvsp[-3].sval)); free((yyvsp[-2].sval)); free((yyvsp[-1].sval));
         (yyval.sval) = strdup(("def " + fname + "(" + params + "):\n" + body + "\n").c_str());
     }
-#line 1481 "fortran.tab.c"
+#line 1772 "fortran.tab.c"
     break;
 
-  case 35: /* call_statement: CALL ID SEMICOLON  */
-#line 213 "fortran.y"
+  case 41: /* call_statement: CALL ID SEMICOLON  */
+#line 401 "fortran.y"
     {
         string fname = (yyvsp[-1].sval);
         free((yyvsp[-1].sval));
         (yyval.sval) = strdup((fname + "()\n").c_str());
     }
-#line 1491 "fortran.tab.c"
+#line 1782 "fortran.tab.c"
     break;
 
-  case 36: /* call_statement: CALL ID LPAREN RPAREN SEMICOLON  */
-#line 219 "fortran.y"
+  case 42: /* call_statement: CALL ID LPAREN RPAREN SEMICOLON  */
+#line 407 "fortran.y"
     {
         string fname = (yyvsp[-3].sval);
         free((yyvsp[-3].sval));
         (yyval.sval) = strdup((fname + "()\n").c_str());
     }
-#line 1501 "fortran.tab.c"
+#line 1792 "fortran.tab.c"
     break;
 
-  case 37: /* call_statement: CALL ID LPAREN param_call_list RPAREN SEMICOLON  */
-#line 225 "fortran.y"
+  case 43: /* call_statement: CALL ID LPAREN param_call_list RPAREN SEMICOLON  */
+#line 413 "fortran.y"
     {
         string fname = (yyvsp[-4].sval);
         string args = (yyvsp[-2].sval);
         free((yyvsp[-4].sval)); free((yyvsp[-2].sval));
         (yyval.sval) = strdup((fname + "(" + args + ")\n").c_str());
     }
-#line 1512 "fortran.tab.c"
+#line 1803 "fortran.tab.c"
     break;
 
-  case 38: /* for_loop: FOR ID ASSIGN value TO value statements ENDFOR  */
-#line 236 "fortran.y"
+  case 44: /* for_loop: FOR ID ASSIGN expression TO expression statements ENDFOR  */
+#line 423 "fortran.y"
     {
         string var = (yyvsp[-6].sval);
         string start = (yyvsp[-4].sval);
@@ -1521,190 +1812,224 @@ yyreduce:
         free((yyvsp[-6].sval)); free((yyvsp[-4].sval)); free((yyvsp[-2].sval)); free((yyvsp[-1].sval));
         (yyval.sval) = strdup(("for " + var + " in range(" + start + ", " + end + " + 1):\n" + body).c_str());
     }
-#line 1525 "fortran.tab.c"
+#line 1816 "fortran.tab.c"
     break;
 
-  case 39: /* do_loop: DO statements ENDDO  */
-#line 248 "fortran.y"
+  case 45: /* do_loop: DO statements ENDDO  */
+#line 435 "fortran.y"
     {
         string body = indent((yyvsp[-1].sval));
         free((yyvsp[-1].sval));
         (yyval.sval) = strdup(("while True:\n" + body).c_str());
     }
-#line 1535 "fortran.tab.c"
+#line 1826 "fortran.tab.c"
     break;
 
-  case 40: /* do_loop: DO value statements ENDDO  */
-#line 254 "fortran.y"
+  case 46: /* do_loop: DO expression statements ENDDO  */
+#line 441 "fortran.y"
     {
         string cond = (yyvsp[-2].sval);
         string body = indent((yyvsp[-1].sval));
         free((yyvsp[-2].sval)); free((yyvsp[-1].sval));
         (yyval.sval) = strdup(("while " + cond + ":\n" + body).c_str());
     }
-#line 1546 "fortran.tab.c"
+#line 1837 "fortran.tab.c"
     break;
 
-  case 41: /* do_loop: DO ID ASSIGN value COMMA value statements ENDDO  */
-#line 261 "fortran.y"
-    {
+  case 47: /* do_loop: DO ID ASSIGN expression COMMA expression statements ENDDO  */
+#line 448 "fortran.y"
+     {
         string var = (yyvsp[-6].sval);
         string start = (yyvsp[-4].sval);
         string end = (yyvsp[-2].sval);
         string body = indent((yyvsp[-1].sval));
         free((yyvsp[-6].sval)); free((yyvsp[-4].sval)); free((yyvsp[-2].sval)); free((yyvsp[-1].sval));
-        (yyval.sval) = strdup(("for " + var + " in range(" + start + ", " + end + " + 1):\n" + body).c_str());
+        (yyval.sval) = strdup(("for " + var + " in range(" + start + ", " + end + "):\n" + body).c_str());
     }
-#line 1559 "fortran.tab.c"
+#line 1850 "fortran.tab.c"
     break;
 
-  case 42: /* return_statement: RETURN expression  */
-#line 275 "fortran.y"
+  case 48: /* do_loop: DO raw_block ENDDO  */
+#line 457 "fortran.y"
+    {
+        string body = indent((yyvsp[-1].sval));
+        free((yyvsp[-1].sval));
+        (yyval.sval) = strdup(("while True:\n" + body).c_str());
+    }
+#line 1860 "fortran.tab.c"
+    break;
+
+  case 49: /* return_statement: RETURN expression  */
+#line 466 "fortran.y"
     {
         string val = (yyvsp[0].sval);
         free((yyvsp[0].sval));
         (yyval.sval) = strdup(("return " + val + "\n").c_str());
     }
-#line 1569 "fortran.tab.c"
+#line 1870 "fortran.tab.c"
     break;
 
-  case 43: /* value: ID  */
-#line 283 "fortran.y"
-                    { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1575 "fortran.tab.c"
+  case 50: /* expression: STRING_LITERAL  */
+#line 474 "fortran.y"
+                         { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
+#line 1876 "fortran.tab.c"
     break;
 
-  case 44: /* value: NUMBER  */
-#line 284 "fortran.y"
-                    { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1581 "fortran.tab.c"
+  case 51: /* expression: ID  */
+#line 475 "fortran.y"
+                         { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
+#line 1882 "fortran.tab.c"
     break;
 
-  case 45: /* value: value EQ value  */
-#line 285 "fortran.y"
-                    {
+  case 52: /* expression: NUMBER  */
+#line 476 "fortran.y"
+                         { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
+#line 1888 "fortran.tab.c"
+    break;
+
+  case 53: /* expression: expression EQ expression  */
+#line 478 "fortran.y"
+                               {
         string res = string((yyvsp[-2].sval)) + " == " + string((yyvsp[0].sval));
         free((yyvsp[-2].sval)); free((yyvsp[0].sval));
         (yyval.sval) = strdup(res.c_str());
     }
-#line 1591 "fortran.tab.c"
+#line 1898 "fortran.tab.c"
     break;
 
-  case 46: /* value: value NEQ value  */
-#line 290 "fortran.y"
-                    {
+  case 54: /* expression: expression NEQ expression  */
+#line 483 "fortran.y"
+                                {
         string res = string((yyvsp[-2].sval)) + " != " + string((yyvsp[0].sval));
         free((yyvsp[-2].sval)); free((yyvsp[0].sval));
         (yyval.sval) = strdup(res.c_str());
     }
-#line 1601 "fortran.tab.c"
+#line 1908 "fortran.tab.c"
     break;
 
-  case 47: /* value: value GT value  */
-#line 295 "fortran.y"
-                   {
+  case 55: /* expression: expression GT expression  */
+#line 488 "fortran.y"
+                               {
         string res = string((yyvsp[-2].sval)) + " > " + string((yyvsp[0].sval));
         free((yyvsp[-2].sval)); free((yyvsp[0].sval));
         (yyval.sval) = strdup(res.c_str());
     }
-#line 1611 "fortran.tab.c"
+#line 1918 "fortran.tab.c"
     break;
 
-  case 48: /* value: value LT value  */
-#line 300 "fortran.y"
-                   {
+  case 56: /* expression: expression LT expression  */
+#line 493 "fortran.y"
+                               {
         string res = string((yyvsp[-2].sval)) + " < " + string((yyvsp[0].sval));
         free((yyvsp[-2].sval)); free((yyvsp[0].sval));
         (yyval.sval) = strdup(res.c_str());
     }
-#line 1621 "fortran.tab.c"
+#line 1928 "fortran.tab.c"
     break;
 
-  case 49: /* value: value GE value  */
-#line 305 "fortran.y"
-                   {
+  case 57: /* expression: expression GE expression  */
+#line 498 "fortran.y"
+                               {
         string res = string((yyvsp[-2].sval)) + " >= " + string((yyvsp[0].sval));
         free((yyvsp[-2].sval)); free((yyvsp[0].sval));
         (yyval.sval) = strdup(res.c_str());
     }
-#line 1631 "fortran.tab.c"
+#line 1938 "fortran.tab.c"
     break;
 
-  case 50: /* value: value LE value  */
-#line 310 "fortran.y"
-                   {
+  case 58: /* expression: expression LE expression  */
+#line 503 "fortran.y"
+                               {
         string res = string((yyvsp[-2].sval)) + " <= " + string((yyvsp[0].sval));
         free((yyvsp[-2].sval)); free((yyvsp[0].sval));
         (yyval.sval) = strdup(res.c_str());
     }
-#line 1641 "fortran.tab.c"
+#line 1948 "fortran.tab.c"
     break;
 
-  case 51: /* expression: STRING_LITERAL  */
-#line 319 "fortran.y"
-                         { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1647 "fortran.tab.c"
+  case 59: /* expression: expression PLUS expression  */
+#line 509 "fortran.y"
+                                 {
+        string res = string((yyvsp[-2].sval)) + " + " + string((yyvsp[0].sval));
+        free((yyvsp[-2].sval)); free((yyvsp[0].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 1958 "fortran.tab.c"
     break;
 
-  case 52: /* expression: value  */
-#line 320 "fortran.y"
-                         { (yyval.sval) = strdup((yyvsp[0].sval)); free((yyvsp[0].sval)); }
-#line 1653 "fortran.tab.c"
+  case 60: /* expression: expression MINUS expression  */
+#line 514 "fortran.y"
+                                  {
+        string res = string((yyvsp[-2].sval)) + " - " + string((yyvsp[0].sval));
+        free((yyvsp[-2].sval)); free((yyvsp[0].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 1968 "fortran.tab.c"
     break;
 
-  case 53: /* expression: expression PLUS expression  */
-#line 322 "fortran.y"
-        {
-            string res = string((yyvsp[-2].sval)) + " + " + string((yyvsp[0].sval));
-            free((yyvsp[-2].sval)); free((yyvsp[0].sval));
-            (yyval.sval) = strdup(res.c_str());
-        }
-#line 1663 "fortran.tab.c"
+  case 61: /* expression: expression MULT expression  */
+#line 519 "fortran.y"
+                                 {
+        string res = string((yyvsp[-2].sval)) + " * " + string((yyvsp[0].sval));
+        free((yyvsp[-2].sval)); free((yyvsp[0].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 1978 "fortran.tab.c"
     break;
 
-  case 54: /* expression: expression MINUS expression  */
-#line 328 "fortran.y"
-        {
-            string res = string((yyvsp[-2].sval)) + " - " + string((yyvsp[0].sval));
-            free((yyvsp[-2].sval)); free((yyvsp[0].sval));
-            (yyval.sval) = strdup(res.c_str());
-        }
-#line 1673 "fortran.tab.c"
+  case 62: /* expression: expression DIV expression  */
+#line 524 "fortran.y"
+                                {
+        string res = string((yyvsp[-2].sval)) + " / " + string((yyvsp[0].sval));
+        free((yyvsp[-2].sval)); free((yyvsp[0].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 1988 "fortran.tab.c"
     break;
 
-  case 55: /* expression: expression MULT expression  */
-#line 334 "fortran.y"
-        {
-            string res = string((yyvsp[-2].sval)) + " * " + string((yyvsp[0].sval));
-            free((yyvsp[-2].sval)); free((yyvsp[0].sval));
-            (yyval.sval) = strdup(res.c_str());
-        }
-#line 1683 "fortran.tab.c"
+  case 63: /* expression: expression POW expression  */
+#line 529 "fortran.y"
+                                {
+        string res = string((yyvsp[-2].sval)) + " ** " + string((yyvsp[0].sval));
+        free((yyvsp[-2].sval)); free((yyvsp[0].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 1998 "fortran.tab.c"
     break;
 
-  case 56: /* expression: ID LPAREN param_call_list RPAREN  */
-#line 340 "fortran.y"
-        {
-            string fname = (yyvsp[-3].sval);
-            string args = (yyvsp[-1].sval);
-            free((yyvsp[-3].sval)); free((yyvsp[-1].sval));
-            (yyval.sval) = strdup((fname + "(" + args + ")").c_str());
-        }
-#line 1694 "fortran.tab.c"
+  case 64: /* expression: ID LPAREN param_call_list RPAREN  */
+#line 535 "fortran.y"
+                                       {
+        string fname = (yyvsp[-3].sval);
+        string args = (yyvsp[-1].sval);
+        free((yyvsp[-3].sval)); free((yyvsp[-1].sval));
+        (yyval.sval) = strdup((fname + "(" + args + ")").c_str());
+    }
+#line 2009 "fortran.tab.c"
     break;
 
-  case 57: /* expression: ID LPAREN RPAREN  */
-#line 347 "fortran.y"
-        {
-            string fname = (yyvsp[-2].sval);
-            free((yyvsp[-2].sval));
-            (yyval.sval) = strdup((fname + "()").c_str());
-        }
-#line 1704 "fortran.tab.c"
+  case 65: /* expression: ID LPAREN RPAREN  */
+#line 541 "fortran.y"
+                       {
+        string fname = (yyvsp[-2].sval);
+        free((yyvsp[-2].sval));
+        (yyval.sval) = strdup((fname + "()").c_str());
+    }
+#line 2019 "fortran.tab.c"
+    break;
+
+  case 66: /* expression: LPAREN expression RPAREN  */
+#line 547 "fortran.y"
+                               {
+        string res = "(" + string((yyvsp[-1].sval)) + ")";
+        free((yyvsp[-1].sval));
+        (yyval.sval) = strdup(res.c_str());
+    }
+#line 2029 "fortran.tab.c"
     break;
 
 
-#line 1708 "fortran.tab.c"
+#line 2033 "fortran.tab.c"
 
       default: break;
     }
@@ -1897,7 +2222,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 354 "fortran.y"
+#line 554 "fortran.y"
 
 
 void yyerror(const char *s) {

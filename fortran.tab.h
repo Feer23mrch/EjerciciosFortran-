@@ -73,29 +73,32 @@ extern int yydebug;
     DO = 274,                      /* DO  */
     ENDDO = 275,                   /* ENDDO  */
     CALL = 276,                    /* CALL  */
-    FOR = 277,                     /* FOR  */
-    TO = 278,                      /* TO  */
-    STEP = 279,                    /* STEP  */
-    ENDFOR = 280,                  /* ENDFOR  */
-    RETURN = 281,                  /* RETURN  */
-    COMMA = 282,                   /* COMMA  */
-    PLUS = 283,                    /* PLUS  */
-    MINUS = 284,                   /* MINUS  */
-    MULT = 285,                    /* MULT  */
-    INTEGER = 286,                 /* INTEGER  */
-    REAL = 287,                    /* REAL  */
-    CHARACTER = 288,               /* CHARACTER  */
-    DOUBLECOLON = 289,             /* DOUBLECOLON  */
-    LEN = 290,                     /* LEN  */
-    ASTERISK = 291,                /* ASTERISK  */
-    EQ = 292,                      /* EQ  */
-    GT = 293,                      /* GT  */
-    LT = 294,                      /* LT  */
-    GE = 295,                      /* GE  */
-    LE = 296,                      /* LE  */
-    NEQ = 297,                     /* NEQ  */
-    COMMENT = 298,                 /* COMMENT  */
-    WHITESPACE = 299               /* WHITESPACE  */
+    READ = 277,                    /* READ  */
+    FOR = 278,                     /* FOR  */
+    TO = 279,                      /* TO  */
+    STEP = 280,                    /* STEP  */
+    ENDFOR = 281,                  /* ENDFOR  */
+    RETURN = 282,                  /* RETURN  */
+    COMMA = 283,                   /* COMMA  */
+    PLUS = 284,                    /* PLUS  */
+    MINUS = 285,                   /* MINUS  */
+    MULT = 286,                    /* MULT  */
+    INTEGER = 287,                 /* INTEGER  */
+    REAL = 288,                    /* REAL  */
+    CHARACTER = 289,               /* CHARACTER  */
+    DOUBLECOLON = 290,             /* DOUBLECOLON  */
+    LEN = 291,                     /* LEN  */
+    ASTERISK = 292,                /* ASTERISK  */
+    EQ = 293,                      /* EQ  */
+    GT = 294,                      /* GT  */
+    LT = 295,                      /* LT  */
+    GE = 296,                      /* GE  */
+    LE = 297,                      /* LE  */
+    NEQ = 298,                     /* NEQ  */
+    COMMENT = 299,                 /* COMMENT  */
+    WHITESPACE = 300,              /* WHITESPACE  */
+    DIV = 301,                     /* DIV  */
+    POW = 302                      /* POW  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -104,11 +107,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 28 "fortran.y"
+#line 32 "fortran.y"
 
     char* sval;
 
-#line 112 "fortran.tab.h"
+#line 115 "fortran.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

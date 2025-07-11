@@ -1,3 +1,9 @@
-PROGRAM Hola
-    WRITE('Hola mundo')
-END PROGRAM Hola
+PROGRAM Algoritmo_Fermat 
+
+   WRITE('a + b')
+   WRITE('a - b')
+   WRITE('a / b')
+   WRITE('a * b')
+   WRITE('a ** b')
+
+END PROGRAM Algoritmo_Fermat 
